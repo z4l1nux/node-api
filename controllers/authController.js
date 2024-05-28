@@ -9,6 +9,16 @@ exports.register = async (req, res) => {
         return res.status(400).json({ msg: 'Dados inválidos' });
     }
 
+    // Adicionando validação para email e senha
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({ msg: 'Email inválido' });
+    }
+
+    if (password.length < 8) {
+        return res.status(400).json({ msg: 'A senha deve ter pelo menos 8 caracteres' });
+    }
+
     const userExists = await User.findOne({ email });
     if (userExists) {
         return res.status(400).json({ msg: 'Usuário já existe' });
@@ -32,6 +42,12 @@ exports.login = async (req, res) => {
 
     if (!email || !password) {
         return res.status(400).json({ msg: 'Dados inválidos' });
+    }
+
+    // Adicionando validação para email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({ msg: 'Email inválido' });
     }
 
     const user = await User.findOne({ email });
