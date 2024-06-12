@@ -27,7 +27,7 @@ jobs:
         sudo mv horusec /usr/local/bin/
 
     - name: Running Horusec Security without Docker
-      run: horusec start -p . --disable-docker --json-output-file=horusec-output.json
+      run: horusec start -p . --disable-docker --output-format=json --json-output-file=./horusec-output.json
 
     - name: Display Horusec Output
-      run: cat horusec-output.json
+      run: cat ./horusec-output.json
