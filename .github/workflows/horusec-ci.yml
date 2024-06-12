@@ -1,0 +1,32 @@
+name: horusec-security
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  security_scan:
+    runs-on: self-hosted
+    steps:
+    - name: Install jq
+      run: sudo apt-get install -y jq
+
+    - name: Update Git
+      run: |
+        sudo add-apt-repository ppa:git-core/ppa
+        sudo apt-get update
+        sudo apt-get install -y git
+
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Running Horusec Security with Docker
+      run: |
+        docker run -v /var/run/docker.sock:/var/run/docker.sock \
+            -v $(pwd):/src/horusec \
+            horuszup/horusec-cli:latest horusec start -p /src/horusec --config-file-path=/src/horusec/horusec-config.json
