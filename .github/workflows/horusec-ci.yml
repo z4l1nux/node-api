@@ -11,12 +11,6 @@ jobs:
     - name: Install jq
       run: sudo apt-get install -y jq
 
-    - name: Update Git
-      run: |
-        sudo add-apt-repository ppa:git-core/ppa
-        sudo apt-get update
-        sudo apt-get install -y git
-
     - name: Check out code
       uses: actions/checkout@v2
 
@@ -29,5 +23,8 @@ jobs:
     - name: Running Horusec Security without Docker
       run: horusec start -p . --disable-docker --output-format=json --json-output-file=./horusec-output.json
 
-    - name: Display Horusec Output
-      run: cat ./horusec-output.json
+    - name: Upload Horusec Output as Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: horusec-output
+        path: ./horusec-output.json
