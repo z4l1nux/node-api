@@ -39,8 +39,8 @@ jobs:
 
     - name: Install Horusec CLI
       run: |
-        curl -fsSL https://github.com/ZupIT/horusec/releases/latest/download/horusec_linux_x86_64.tar.gz -o horusec.tar.gz
-        tar -xzf horusec.tar.gz
+        curl -fsSL https://github.com/ZupIT/horusec/releases/download/v2.8.0/horusec_linux_amd64 -o horusec
+        chmod +x horusec
         sudo mv horusec /usr/local/bin/
 
     - name: Running Horusec Security without Docker
