@@ -39,7 +39,7 @@ jobs:
 
     - name: Install Horusec CLI
       run: |
-        curl -fsSL https://github.com/ZupIT/horusec/releases/download/v2.14.0/horusec_2.14.0_linux_x86_64.tar.gz -o horusec.tar.gz
+        curl -fsSL https://github.com/ZupIT/horusec/releases/latest/download/horusec_linux_x86_64.tar.gz -o horusec.tar.gz
         tar -xzf horusec.tar.gz
         sudo mv horusec /usr/local/bin/
 
