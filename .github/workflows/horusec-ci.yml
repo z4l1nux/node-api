@@ -6,7 +6,7 @@ on:
 
 jobs:
   security_scan:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - name: Install jq
       run: sudo apt-get install -y jq
