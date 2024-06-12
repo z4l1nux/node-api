@@ -20,23 +20,6 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v2
 
-    - name: Install Docker
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y \
-            ca-certificates \
-            curl \
-            gnupg \
-            lsb-release
-        sudo mkdir -p /etc/apt/keyrings
-        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-        echo \
-          "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-          $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-        sudo apt-get update
-        sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
-        sudo usermod -aG docker $USER
-
     - name: Install Horusec CLI
       run: |
         curl -fsSL https://github.com/ZupIT/horusec/releases/download/v2.8.0/horusec_linux_amd64 -o horusec
@@ -44,7 +27,7 @@ jobs:
         sudo mv horusec /usr/local/bin/
 
     - name: Running Horusec Security without Docker
-      run: horusec start -p . --json-output-file=horusec-output.json
+      run: horusec start -p . --disable-docker --json-output-file=horusec-output.json
 
     - name: Display Horusec Output
       run: cat horusec-output.json
