@@ -37,11 +37,12 @@ jobs:
         sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
         sudo usermod -aG docker $USER
 
-    - name: Running Horusec Security with Docker
+    - name: Install Horusec CLI
       run: |
-        docker run -v /var/run/docker.sock:/var/run/docker.sock \
-            -v $(pwd):/src/horusec \
-            horuszup/horusec-cli:latest horusec start -p /src/horusec --config-file-path=/src/horusec/horusec-config.json > horusec-output.json
+        curl -fsSL https://horusec.io/bin/install.sh | bash
+
+    - name: Running Horusec Security without Docker
+      run: horusec start -p . --json-output-file=horusec-output.json
 
     - name: Display Horusec Output
       run: cat horusec-output.json
